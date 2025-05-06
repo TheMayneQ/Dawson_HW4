@@ -1,0 +1,87 @@
+﻿@page "/products/details/{id:int}"
+@model Dawson_HW4.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = Model.Product?.ProductName ?? "Product Details";
+}
+
+@if (Model.Product != null)
+{
+    <h1>@Model.Product.ProductName</h1>
+
+    <div>
+        <h4>Product Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">Product ID</dt>
+            <dd class="col-sm-10">@Model.Product.ProductID</dd>
+
+            <dt class="col-sm-2">Product Code</dt>
+            <dd class="col-sm-10">@Model.Product.ProductCode</dd>
+
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@Model.Product.Description</dd>
+
+            <dt class="col-sm-2">Category ID</dt>
+            <dd class="col-sm-10">@Model.Product.CategoryID</dd>
+
+            <dt class="col-sm-2">Standard Cost</dt>
+            <dd class="col-sm-10">@Model.Product.StandardCost.ToString("C")</dd>
+
+            <dt class="col-sm-2">List Price</dt>
+            <dd class="col-sm-10">@Model.Product.ListPrice.ToString("C")</dd>
+
+            <dt class="col-sm-2">Reorder Level</dt>
+            <dd class="col-sm-10">@Model.Product.ReorderLevel</dd>
+
+            <dt class="col-sm-2">Target Level</dt>
+            <dd class="col-sm-10">@Model.Product.TargetLevel</dd>
+
+            <dt class="col-sm-2">Discontinued</dt>
+            <dd class="col-sm-10">@(Model.Product.Discontinued ? "Yes" : "No")</dd>
+
+            <dt class="col-sm-2">Supplier ID</dt>
+            <dd class="col-sm-10">@Model.Product.SupplierID</dd>
+
+            <dt class="col-sm-2">Available Quantity</dt>
+            <dd class="col-sm-10">@Model.Product.AvailableQty</dd>
+
+            <dt class="col-sm-2">Reordered</dt>
+            <dd class="col-sm-10">@(Model.Product.Reordered ? "Yes" : "No")</dd>
+
+            @if (!string.IsNullOrEmpty(Model.Product.ProdImage))
+            {
+                <dt class="col-sm-2">Image</dt>
+                <dd class="col-sm-10">
+                    <img src="@Model.Product.ProdImage" alt="@Model.Product.ProductName" style="max-width: 200px; max-height: 200px;" />
+                </dd>
+            }
+        </dl>
+    </div>
+    <div>
+        <a asp-page="/Categories/@(GetCategoryPageName(Model.Product.CategoryID))">Back to Category</a>
+        @* Or a more generic back link: <a asp-page="/Index">Back to Home</a> *@
+    </div>
+}
+else
+{
+    <p>Product not found.</p>
+}
+
+@functions {
+    private string GetCategoryPageName(int categoryId)
+    {
+        // This is a helper to navigate back to the correct category page.
+        // You'll need to map CategoryIDs to their page names.
+        // Example:
+        switch (categoryId)
+        {
+            case 100: return "Beverages";
+            case 101: return "Condiments"; // Assuming Condiments CategoryID is 101
+            case 102: return "CannedFoods"; // And so on...
+            case 103: return "DriedFruits";
+            case 104: return "Soups";
+            default: return "../Index"; // Fallback
+        }
+    }
+}

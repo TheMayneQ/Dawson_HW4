@@ -6,7 +6,7 @@ namespace Dawson_HW4.Data
     {
         List<Product> GetProductList(int categoryID);
 
-        List<Product> GetProductDetails(int productID);
+        Product GetProductDetails(int productID);
 
     }
 }
